@@ -1,0 +1,21 @@
+curl -H "Content-Type: application/json" -X POST -d '{"email":"test@test.com","password":"password"}' https://hellodriver.herokuapp.com/login
+
+https://hellodriver.cloudant.com/user/0b5541bf4a4c08e1d50df9617d5114fb?revs_info=true&include_docs=true
+https://hellodriver.cloudant.com/user/0b5541bf4a4c08e1d50df9617d5114fb?rev=17-b082b715b91c8eeef6e6a6bd299025b1
+
+pouchdb changes function
+
+) run heroku domains:add www.hellodriverapp.com
+
+4) run heroku domains:add hellodriverapp.com
+
+Forwarding to cloudant at https://oodysecontstonspecedistr:PvLQDoJ2me4q6aCpDHNYiSvx@hellodriver.cloudant.com/trip/_revs_diff ...
+
+curl -H "Content-Type: application/json" -X POST -d '{"60056c60-00b3-4fa8-bf9a-7c6fc16b8beb":["1-a9a58236d8cb660c3e86aa7c3dd81458"]}' https://oodysecontstonspecedistr:PvLQDoJ2me4q6aCpDHNYiSvx@hellodriver.cloudant.com/trip/_revs_diff
+
+
+-- new code
+curl -H "Content-Type: application/json" -X POST -d '{"amount":200,"merchantReference": "airtime","useOnce": true}' -u merchant-279:6A4E029B5AE29C7EDCC2A4C8773DB9B0 https://masterpasstest.oltio.co.za/pluto/code/create
+
+-- code status
+curl -H "Content-Type: application/json" -X GET -u merchant-279:6A4E029B5AE29C7EDCC2A4C8773DB9B0 https://masterpasstest.oltio.co.za/pluto/code/0221813581
