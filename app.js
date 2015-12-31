@@ -5,16 +5,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var routes = require('./routes/index');
-var users = require('./routes/users');
-
-var token = require('./modules/token');
-
-var gs = require('./modules/global_settings');
-
-var cloudant_proxy = require('./routes/cloudant_proxy.js');
-
+var token = require('./lib/token');
 var methodOverride = require('method-override');
 
 var app = express();
@@ -23,22 +15,10 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.use(methodOverride());
 
-// view engine setup
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-
-var whitelist = ['http://127.0.0.1'];
-var corsOptions = {
-  origin: '*',
-  methods: ['GET', 'PUT', 'POST', 'OPTIONS']
-};
-
-
 var allowCrossDomain = function(req, res, next) {
   console.log('Request origin %s', req.headers.origin);
   //res.header('Access-Control-Allow-Origin', req.headers.origin);
-  res.header('Access-Control-Allow-Origin', 'null');
+  res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   res.header('Access-Control-Allow-Credentials', 'true');
@@ -51,14 +31,16 @@ var allowCrossDomain = function(req, res, next) {
   }
 };
 app.use(allowCrossDomain);
+// view engine setup
 
+// uncomment after placing your favicon in /public
+//app.use(favicon(__dirname + '/public/favicon.ico'));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
-app.use(jsonParser);
-app.use(urlencodedParser);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -66,8 +48,7 @@ app.all('*', function(req, res, next) {
   console.log('filter: applying filter on %s', req.path);
 
   if (req.path == '/login' || req.path == '/signup' || req.path == '/verify' ||
-    req.path == '/loginFB' || req.path == '/forgot' || req.path.indexOf('/images/') == 0 ||
-    req.path.indexOf('/db/') == 0) {
+    req.path == '/loginFB' || req.path == '/forgot' || req.path.indexOf('/images/') == 0) {
     console.log('Path allowed %s', req.path);
     next();
   } else {
@@ -90,10 +71,7 @@ app.all('*', function(req, res, next) {
   }
 });
 
-//app.use(cloudant_proxy(/\/db\/(.*)/, gs.CLOUDANT_REVERSE_PROXY_URL));
-app.use(cloudant_proxy('db', gs.CLOUDANT_REVERSE_PROXY_URL));
 app.use('/', routes);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -107,7 +85,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
+  app.use(function(err, req, res, nexzt) {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
@@ -125,11 +103,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-//app.set('port', process.env.PORT || 3000);
-var server = app.listen(app.get('port'), function() {
-  console.log('Express server listening on port ' + server.address().port);
-});
-
 
 module.exports = app;
