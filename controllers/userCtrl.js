@@ -54,14 +54,7 @@ module.exports = {
   					"last_name": req.body.last_name,
   					"facebook_account": false,
   					"verified": false,
-  					"session_token": "",
-  					"settings": {
-  						"distance_measurement_type":"kilometers",
-  						"bluetooth": {},
-  						"sound": false,
-  						"account_type": "app_only",
-  						"accuracy": "10"
-  					}
+  					"session_token": ""
   				};
   				var user_token = token.getNewUncachedToken(user);
   				user.session_token = user_token;
@@ -135,14 +128,7 @@ module.exports = {
   					"facebook_account": true,
   					"facebook_id": req.body.facebook_id,
   					"verified": true,
-  					"session_token": "",
-  					"settings": {
-  						"distance_measurement_type":"kilometers",
-  						"bluetooth": {},
-  						"sound": false,
-  						"account_type": "app_only",
-  						"accuracy": "10"
-  					}
+  					"session_token": ""
   				};
   				var user_token = token.getNewUncachedToken(user);
   				user.session_token = user_token;
