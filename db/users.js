@@ -18,6 +18,23 @@ module.exports = {
 			}
 		});
 	},
+	findByToken: function(token, cb) {
+		console.log('user dao: search for user by token %s', token);
+
+		dbcon.getUserDb().search('user', 'searchToken', {q:token, include_docs:'true'}, function(error, result) {
+			if (error) {
+				console.log('user dao: found error %s', error);
+				cb(error, null)
+			} else {
+				console.log('user dao: found %d record(s) for %s', result.rows.length, token);
+				if (result.rows.length > 0) {
+					cb(null, result.rows[0].doc);
+				} else {
+					cb(null, null);
+				}
+			}
+		});
+	},
 	findByFacebookId: function(fbId, cb) {
 		console.log('user dao: search for user by facebook id %s', fbId);
 

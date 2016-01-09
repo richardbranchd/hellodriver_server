@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var token = require('./lib/token');
+var user = require('./db/users');
 var methodOverride = require('method-override');
 
 var app = express();
@@ -20,7 +21,7 @@ var allowCrossDomain = function(req, res, next) {
   //res.header('Access-Control-Allow-Origin', req.headers.origin);
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,authorization');
   res.header('Access-Control-Allow-Credentials', 'true');
 
   // intercept OPTIONS method
@@ -53,20 +54,19 @@ app.all('*', function(req, res, next) {
     next();
   } else {
     console.log('Path disallowed %s', req.path);
-    var bearerToken;
     var bearerHeader = req.headers["authorization"];
-    if (typeof bearerHeader !== 'undefined') {
-      var bearer = bearerHeader.split(" ");
-      bearerToken = bearer[1];
-
-      if (token.hasTokenInCache(bearerToken)) {
-        next();
-      } else {
-        res.send(403);
-      }
+    if (typeof(bearerHeader) !== 'undefined') {
+      user.findByToken(bearerHeader, function(error, data) {
+        if (data) {
+          next();
+        } else {
+          console.log('token search error: %s', error);
+          res.status(403).send('no token found');
+        }
+      });
     } else {
       console.log('filter: no headers supplied...');
-      res.send(403);
+      res.status(403).send('no token found');
     }
   }
 });
