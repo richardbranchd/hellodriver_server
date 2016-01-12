@@ -11,12 +11,12 @@ module.exports = {
     }
   },
   verify: function(req, res, next) {
-    console.log(req.body.beacons);
+    console.log(req.body);
 
     var validBeacons = [];
-    for (b in req.body.beacons) {
-      if (req.body.beacons[b].address == 'C7:28:1E:54:96:B5') {
-        validBeacons.push(req.body.beacons[b]);
+    for (b in req.body) {
+      if (req.body[b].address == 'C7:28:1E:54:96:B5') {
+        validBeacons.push(req.body[b]);
       }
     }
 
