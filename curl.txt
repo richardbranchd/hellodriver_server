@@ -1,5 +1,9 @@
 curl -H "Content-Type: application/json" -X POST -d '{"email":"test@test.com","password":"password"}' https://hellodriverserver.herokuapp.com/login
 
+curl -H "Content-Type: application/json" -X POST -d '{"address":"C7:28:1E:54:96:B5","distance":"1"}' https://hellodriverserver.herokuapp.com/beaconVerify
+
+
+
 https://hellodriver.cloudant.com/user/0b5541bf4a4c08e1d50df9617d5114fb?revs_info=true&include_docs=true
 https://hellodriver.cloudant.com/user/0b5541bf4a4c08e1d50df9617d5114fb?rev=17-b082b715b91c8eeef6e6a6bd299025b1
 

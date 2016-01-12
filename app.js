@@ -55,7 +55,11 @@ app.all('*', function(req, res, next) {
   } else {
     console.log('Path disallowed %s', req.path);
     var bearerHeader = req.headers["authorization"];
-    if (typeof(bearerHeader) !== 'undefined') {
+
+    console.log('headers');
+    console.log(req.headers);
+
+    if (bearerHeader) {
       user.findByToken(bearerHeader, function(error, data) {
         if (data) {
           next();
