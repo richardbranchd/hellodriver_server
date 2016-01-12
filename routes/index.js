@@ -13,5 +13,6 @@ router.put('/loginFB', userCtrl.loginFB);
 router.get('/verify', userCtrl.verify);
 router.post('/forgot', userCtrl.forgot);
 router.get('/beaconCost/:locale', beaconCtrl.cost);
+router.post('/beaconVerify', beaconCtrl.verify);
 
 module.exports = router;
