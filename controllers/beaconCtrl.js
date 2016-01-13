@@ -15,7 +15,9 @@ module.exports = {
 
     var validBeacons = [];
     for (b in req.body) {
-      if (req.body[b].address == 'C7:28:1E:54:96:B5') {
+      if (req.body[b].address == 'C7:28:1E:54:96:B5') { // mac address for android
+        validBeacons.push(req.body[b]);
+      } else if (req.body[b].address == 'EC648286-1F7B-20FA-7B75-FC77F77BDDDE') { // uuid for ios
         validBeacons.push(req.body[b]);
       }
     }
