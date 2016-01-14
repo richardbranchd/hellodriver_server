@@ -12,6 +12,9 @@ router.post('/signup', userCtrl.signup);
 router.put('/loginFB', userCtrl.loginFB);
 router.get('/verify', userCtrl.verify);
 router.post('/forgot', userCtrl.forgot);
+router.post('/user', userCtrl.update);
+
+/* beacon routes */
 router.get('/beaconCost/:locale', beaconCtrl.cost);
 router.post('/beaconVerify', beaconCtrl.verify);
 

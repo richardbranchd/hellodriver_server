@@ -216,5 +216,15 @@ module.exports = {
         }
       }
     });
+  },
+  update: function(req, res, nex) {
+    users.updateUser(req.body, function(error, data) {
+      if (error) {
+        console.log(error);
+        res.status(500).json(errGen.createDefaultUnknown());
+      } else {
+        res.status(200).json(user);
+      }
+    });
   }
 };
