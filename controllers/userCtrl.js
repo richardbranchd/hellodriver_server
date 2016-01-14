@@ -218,12 +218,26 @@ module.exports = {
     });
   },
   update: function(req, res, nex) {
-    users.updateUser(req.body, function(error, data) {
+    users.findByEmail(req.body.email, function(error, data) {
       if (error) {
         console.log(error);
         res.status(500).json(errGen.createDefaultUnknown());
       } else {
-        res.status(200).json(user);
+        var user = data;
+        if (user != null) {
+          var updatedUser = req.body;
+          updatedUser._rev = user._rev;
+
+          users.updateUser(updatedUser, function(error, data) {
+            if (error) {
+              console.log(error);
+              res.status(500).json(errGen.createDefaultUnknown());
+            } else {
+              res.status(200).json(user);
+            }
+          });
+
+        }
       }
     });
   }
