@@ -48,6 +48,7 @@ module.exports = {
           res.status(500).json(errGen.createError('Email address ' + req.body.email + ' is already in use.'));
   			} else {
   				user = {
+            "type": "user",
   					"email": req.body.email,
   					"password": req.body.password,
   					"first_name": req.body.first_name,
@@ -122,6 +123,7 @@ module.exports = {
   			} else {
   				// new user so register
   				user = {
+            "type": "user",
   					"email": req.body.email,
   					"first_name": req.body.first_name,
   					"last_name": req.body.last_name,
